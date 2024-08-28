@@ -43,11 +43,6 @@ Some constraints on measurements:
     measurements, which some output formats require.
 """
 
-# Import openhtf with an abbreviated name, as we'll be using a bunch of stuff
-# from it throughout our test scripts. See __all__ at the top of
-# openhtf/__init__.py for details on what's in top-of-module namespace.
-import random
-
 import openhtf as htf
 
 # Import this output mechanism as it's the specific one we want to use.
@@ -58,6 +53,7 @@ from openhtf.output.callbacks import json_factory
 # below, but normally you'll only import it when you want to define custom
 # measurement validators.
 from openhtf.util import validators
+import secrets
 
 
 # Simple example of measurement use, similar to hello_world.py usage.
@@ -138,7 +134,7 @@ def multdim_measurements(test):
   for t in range(10):
     resistance = 10
     voltage = 10 + 10.0 * t
-    current = voltage / resistance + .01 * random.random()
+    current = voltage / resistance + .01 * secrets.SystemRandom().random()
     dimensions = (t, voltage, current)
     test.measurements['power_time_series'][dimensions] = 0
 
